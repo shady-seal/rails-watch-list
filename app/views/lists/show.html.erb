@@ -1,0 +1,16 @@
+<h2><%= @list.name %></h2>
+<%= pluralize(@list.movies.size, "movie") %>
+<ul>
+  <% @list.movies.each do |movie| %>
+    <% bookmark = Bookmark.find_by(list: @list, movie: movie) %>
+    <li>
+        <h5>Rating: <%=movie.rating%></h5>
+        <p><%=movie.title%></p>
+    </li>
+  <% end %>
+</ul>
+
+<%= render "bookmarks/modal", list: @list, bookmark: @bookmark %>
+<%= link_to "delete this list", list_path(@list), class: "btn btn-cancel", data: { turbo_method: :delete, turbo_confirm: "Are you sure you want to delete this list?" } %>
+
+<%# how to do the pop-up add bookmark%>

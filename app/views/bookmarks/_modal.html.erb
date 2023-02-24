@@ -1,0 +1,11 @@
+<h3>Add a movie to your <%= @list.name %> list</h3>
+<%= simple_form_for [@list, @bookmark] do |f| %>
+  <div class="modal-body">
+    <%= f.association :movie, collection: Movie.all.order(:title), prompt: "Select a movie", input_html: { data: { controller: "tom-select" } } %>
+    <%= f.input :comment, placeholder: "Enter a comment about the movie" %>
+  </div>
+  <div class="modal-footer">
+    <%= f.submit "Add movie", class: "btn btn-flat" %>
+    <%= link_to "Go back", lists_path, class:"btn btn-cancel"%>
+  </div>
+<% end %>
