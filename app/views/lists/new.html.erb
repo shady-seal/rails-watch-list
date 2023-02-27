@@ -1,6 +1,6 @@
-<h2>Create a new list</h2>
+<h3>Create list</h3>
 <%= simple_form_for(@list) do |f| %>
-  <%= f.input :name %>
-  <%= f.submit %>
+  <%= f.input :name, placeholder: "Enter the new list name" %>
+  <%= f.submit "Add list", class: "btn btn-flat" %>
+  <%= link_to 'Back', lists_path, class: "btn btn-cancel" %>
 <% end %>
-<%= link_to 'Go back', lists_path %>

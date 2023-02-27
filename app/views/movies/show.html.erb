@@ -3,7 +3,9 @@
 <img src="<%= @movie.poster_url %>" alt="movie-poster" width="300">
 <h5>Rating:<%= @movie.rating %></h5>
 
-<%= link_to 'Bookmark this movie', movies_path %>
+<button type="button" class="btn btn-flat" data-bs-toggle="modal" data-bs-target="#new_movie_modal">
+  Bookmark this movie
+</button>
 <%= link_to 'Go back', movies_path %>
 
 <%# how to save movie through the link%>

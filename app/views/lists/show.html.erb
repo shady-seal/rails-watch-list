@@ -1,16 +1,45 @@
-<h2><%= @list.name %></h2>
-<%= pluralize(@list.movies.size, "movie") %>
-<ul>
-  <% @list.movies.each do |movie| %>
-    <% bookmark = Bookmark.find_by(list: @list, movie: movie) %>
-    <li>
-        <h5>Rating: <%=movie.rating%></h5>
-        <p><%=movie.title%></p>
-    </li>
-  <% end %>
-</ul>
+<div class="position-relative">
+  <div class="banner banner-large" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url(<%= asset_path('list_background.jpg') %>)">
+    <h1><%= @list.name %></h1>
+    <div class="banner-btn">
+      <button type="button" class="btn btn-box" data-bs-toggle="modal" data-bs-target="#new_movie_modal">
+        Add a movie
+      </button>
+      <%= link_to "Delete this list", list_path(@list), class: "btn btn-box", data: { turbo_method: :delete, turbo_confirm: "Are you sure you want to delete this list?" } %>
+      <%= link_to 'Go back', lists_path, class: "btn btn-box" %>
+    </div>
+  </div>
+  <span class="movie-tag"><%= pluralize(@list.movies.size, "movie") %></span>
+</div>
+<div class="container mb-5">
+  <div class="row justify-content-center my-4">
+    <span class="col-lg-6 mb-2"><small><em class="text-muted"><%= "You haven't saved any movies yet!" if @list.movies.empty? %></em></small></span>
+  </div>
+  <div class="row my-2">
+    <% @list.movies.each do |movie| %>
+      <% bookmark = Bookmark.find_by(list: @list, movie: movie) %>
+      <div class="col-6 col-sm-3 mb-4">
+        <div class="bg-white rounded shadow h-100">
+          <%= image_tag movie.poster_url, alt: movie.title, class: "movie-img rounded-top" %>
+          <div class="p-3 rounded-bottom d-flex flex-column">
+            <strong><%= movie.title %></strong>
+            <small class="text-muted"><%= bookmark.comment %></small>
+            <div class="d-flex align-items-end justify-content-between pt-4">
+                <%= link_to movie_path(movie) do %><i class="fa-solid fa-comment blue"></i><% end %>
+                <div class="blue">
+                  <%= movie.rating %> <i class="fa-solid fa-star"></i>
+                </div>
+                <%= link_to bookmark_path(bookmark), data: { turbo_method: :delete, turbo_confirm: "Are you sure you want to remove #{movie.title} from your #{@list.name} list"}, class: 'text-danger' do %>
+                  <i class="fa-solid fa-x blue"></i>
+                <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+
 
 <%= render "bookmarks/modal", list: @list, bookmark: @bookmark %>
-<%= link_to "delete this list", list_path(@list), class: "btn btn-cancel", data: { turbo_method: :delete, turbo_confirm: "Are you sure you want to delete this list?" } %>
-
 <%# how to do the pop-up add bookmark%>

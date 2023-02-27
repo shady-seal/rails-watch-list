@@ -1,10 +1,26 @@
-<h1>Lists Index</h1>
-  <ul>
+<div class="position-relative">
+  <div class="banner banner-xlarge" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url(<%= asset_path('home_banner.jpg') %>)">
+    <div class="text-center text-white">
+      <h1>Showtime</h1>
+      <h4 class="yellow">Your digital movie collection</h4>
+    </div>
+    <div class="banner-btn">
+      <%= link_to 'Create new list', new_list_path, class: "btn btn-box" %>
+      <%= link_to "Display lists", new_list_path, class: "btn btn-box"%>
+      <%= link_to 'Browse movies', movies_path, class: "btn btn-box" %>
+    </div>
+  </div>
+</div>
+<div class="container py-5">
+  <div class="row">
     <% @lists.each do |list| %>
-      <li>
-          <%= link_to list.name, list_path(list)%>
-      </li>
+      <div class="col-12 col-sm-6 col-md-4 mb-3">
+        <%= link_to list_path(list), class:"text-decoration-none" do %>
+          <div class="card-category" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url(<%= asset_path('list_background.jpg') %>)">
+            <%= list.name %>
+          </div>
+        <% end %>
+      </div>
     <% end %>
-  </ul>
-<%= link_to 'Create new list', new_list_path %>
-<%= link_to 'Browse movies', movies_path %>
+  </div>
+</div>
